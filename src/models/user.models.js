@@ -93,8 +93,12 @@ userSchema.methods.generateAccessToken = function () {
 userSchema.methods.generateRefreshToken = function () {
     return jwt.sign(
         { _id: this._id },
+
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
+
+        { 
+            expiresIn: process.env.REFRESH_TOKEN_EXPIRY
+        }
     )
 }
 
@@ -131,5 +135,5 @@ Pre Hook/Middleware:
     Arrow functions (() => {}) do NOT have their own 'this' so avoid them in mongoose hooks
 
 Custom hooks:
-    schemaName.methods.propertyName = () => {}
+    schemaName.methods.propertyName = function () => {}
 */
