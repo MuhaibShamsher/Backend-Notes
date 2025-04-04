@@ -1,6 +1,6 @@
 import asyncHandler from '../utils/asyncHandler.js'
 import ApiError from "../utils/ApiError.js"
-import ApiResponse from "../utils/ApirResponse.js";
+import ApiResponse from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 import { User } from '../models/user.models.js';
 import { uploadOnCloudinary, deleteOnCloudinary } from '../utils/cloudinary.js';
@@ -257,11 +257,11 @@ const updateAvatar = asyncHandler(async (req, res) => {
     }
 
     const user = await User.findById(req.user._id).select("-password -refreshToken")
-    if(!user) {
+    if (!user) {
         throw new ApiError(500, "User not found!")
     }
 
-    if(user.avatar) {
+    if (user.avatar) {
         await deleteOnCloudinary(user.avatar);
     }
 
@@ -287,11 +287,11 @@ const updateCoverImage = asyncHandler(async (req, res) => {
     }
 
     const user = await User.findById(req.user._id).select("-password -refreshToken")
-    if(!user) {
+    if (!user) {
         throw new ApiError(500, "User not found!")
     }
 
-    if(user.coverImage) {
+    if (user.coverImage) {
         await deleteOnCloudinary(user.avatar);
     }
 
@@ -306,12 +306,12 @@ const updateCoverImage = asyncHandler(async (req, res) => {
 const updateEmail = asyncHandler(async (req, res) => {
     const { email } = req.body;
 
-    if(!email || email?.trim() === "") {
+    if (!email || email?.trim() === "") {
         throw new ApiError(400, "Invalid email!")
     }
 
     const userExists = await User.findOne({ email })
-    if(userExists) {
+    if (userExists) {
         throw new ApiError(404, "This email is already in use!")
     }
 
@@ -335,7 +335,7 @@ const updateEmail = asyncHandler(async (req, res) => {
 const getUserChannelProfile = asyncHandler(async (req, res) => {
     const userName = req.params;
 
-    if(!userName && userName.trim() === "") {
+    if (!userName && userName.trim() === "") {
         throw new ApiError(404, "User not found!")
     }
 
@@ -376,7 +376,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
                 isSubscribed: {
                     // current active user kya viewing user ke subscriber list mei hai ya nahi
                     $cond: {
-                        if: {$in: [req.user?._id, "$subscribers.subscriber"]}, 
+                        if: { $in: [req.user?._id, "$subscribers.subscriber"] },
                         then: true,
                         else: false
                     }
@@ -401,7 +401,7 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 
     // optional channing will check for null and undefined
     // not operator will return true if an array is empty
-    if(!channel?.length) {
+    if (!channel?.length) {
         throw new ApiError(404, "Channel does not exists!")
     }
 
@@ -459,7 +459,7 @@ const watchHistory = asyncHandler(async (req, res) => {
         }
     ])
 
-    if(!user) {
+    if (!user) {
         throw new ApiError(404, "Invalid user!")
     }
 
