@@ -1,8 +1,9 @@
 /*
 Aggregation is like a data processing pipeline, where each stage modifies the data and passes it to the next step.
 MongoDB Aggregation Stages: $lookup, $project, $match, $sort, $group
-MongoDB Aggregation Operators: $sum, $min, $max, $avg, $gt, $gte
+MongoDB Aggregation Operators: $sum, $size, $first, $pull, $push, $min, $max, $avg, $gt, $gte
 aggregate() aik array return karta hai
+Understand the output, whether it is an array with single objecy or multiple objects
 
 Stage               Purpose	                          Example
 $match      Filters data (like find())	        Get users from "Lahore"
@@ -10,6 +11,8 @@ $group      Groups data (like SQL GROUP BY)	    Count users per city
 $sort	    Sorts the results	                Sort users by age
 $project	Selects specific fields	            Show only name and age
 $lookup	    Joins another collection	        Get orders of each user
+$unwind
+$addFields
 */
 
 
@@ -75,6 +78,13 @@ output = [
     { "_id": "Karachi", "avgAge": 28 }
 ]
 
+/*
+$lookup jitne doucments hoo gai utne documents he return kare gaa.
+Agr aik single document mei result chahiye tou $group ka use karo
+
+when you are paginating, avoid using $group
+B\c we don’t need to group them under one object, this structure is harder to work when paginating.
+*/
 
 // ......................................................... $sort ......................................................
 // sort users by age from oldest to youngest
@@ -281,3 +291,64 @@ Video.aggregate([
         }
     },
 ])
+
+
+// ......................................................... $unwind ..............................................................
+const orders = [
+    {
+        "_id": 1,
+        "customer": "Alice",
+        "items": ["Laptop", "Mouse", "Keyboard"]
+    },
+    {
+        "_id": 2,
+        "customer": "Bob",
+        "items": ["Monitor", "Printer"]
+    }
+]
+
+// creating multiple documents, one for each array element.
+db.orders.aggregate([
+    { 
+        $unwind: "$items" 
+    }
+]);
+
+[
+    { "_id": 1, "customer": "Alice", "items": "Laptop" },
+    { "_id": 1, "customer": "Alice", "items": "Mouse" },
+    { "_id": 1, "customer": "Alice", "items": "Keyboard" },
+    { "_id": 2, "customer": "Bob", "items": "Monitor" },
+    { "_id": 2, "customer": "Bob", "items": "Printer" }
+]
+
+/*
+$lookup return the array of all matching documents. If we want to include each document in a specific parent document we $unwind it
+we mostly used $unwind when we have the one-to-one relationship between two tables.
+one-to-one relationship -> means the $lookup always returns an array with the sinlge object
+If we used $unwind but there is not any relationship between tables then the parent document will be deleted.
+to avoid this probelm we can use $unwind like this
+$unwind: {
+    path: "$owner",
+    preserveNullAndEmptyArrays: true
+}
+*/
+
+/*
+$lookup returns an array of all matching documents from the joined collection.
+
+When we have a "one-to-one relationship" (e.g., a comment has only one owner), 
+$lookup still returns an array, but usually with a single object.
+
+To flatten this array and include the joined document directly into the parent document, we use **$unwind**.
+
+If there is "no matching document" in the joined collection, using $unwind without any options will cause the parent document to be removed from the result.
+
+To avoid this issue, use:
+$unwind: {
+    path: "$owner",
+    preserveNullAndEmptyArrays: true
+}
+This keeps the parent document in the results even when the join yields no match.
+*/
+
