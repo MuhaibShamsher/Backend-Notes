@@ -1,7 +1,8 @@
-## Project Description
+# Reelbite
 
-This project serves as a comprehensive video-sharing and social engagement platform. It allows users to manage their profiles, upload and search videos, tweet and engage with tweets, organize content through playlists, and connect through subscriptions. The backend is built using Node.js, Express.js, and MongoDB, and media files are managed with Cloudinary.
+Reelbite is a full-featured social media platform that blends **YouTube-style video sharing**. Users can upload and manage videos, like content, subscribe to channels, create playlists, and engage through comments — all in one powerful, streamlined application.
 
+Built with **Node.js**, **Express**, and **MongoDB**, Reelbite offers a scalable backend architecture and a modern API-driven experience perfect for learning, building, and experimenting with full-stack development and security practices.
 
 ## Features
 
@@ -16,11 +17,6 @@ This project serves as a comprehensive video-sharing and social engagement platf
 - Search videos with pagination and sorting
 - Edit and delete videos
 - Control video visibility (publish/unpublish)
-
-### Tweet Management
-- Create and publish tweets
-- View tweets by a specific user
-- Update and delete tweets
 
 ### Subscription Management
 - Subscribe to channels
@@ -53,7 +49,7 @@ This project serves as a comprehensive video-sharing and social engagement platf
 
 1. **Clone the Repository**
    ```bash
-   git clone 
+   git clone https://github.com/MuhaibShamsher/Reelbite.git
 
 2. **Navigate to Project Directory**
    ```bash
@@ -71,4 +67,3 @@ This project serves as a comprehensive video-sharing and social engagement platf
    ```bash
    npm start
 
-   
