@@ -2,7 +2,6 @@
 
 This project serves as a comprehensive video-sharing and social engagement platform. It allows users to manage their profiles, upload and search videos, tweet and engage with tweets, organize content through playlists, and connect through subscriptions. The backend is built using Node.js, Express.js, and MongoDB, and media files are managed with Cloudinary.
 
----
 
 ## Features
 
@@ -39,7 +38,6 @@ This project serves as a comprehensive video-sharing and social engagement platf
 ### Comment Management
 - Add, update, and delete comments on videos
 
----
 
 ## Technologies Used
 
@@ -48,7 +46,6 @@ This project serves as a comprehensive video-sharing and social engagement platf
 - **MongoDB**
 - **Cloudinary** (media file storage)
 
----
 
 ## Installation and Setup
 
@@ -56,11 +53,11 @@ This project serves as a comprehensive video-sharing and social engagement platf
 
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/Hruthik-28/youtube-twitter.git
+   git clone 
 
 2. **Navigate to Project Directory**
    ```bash
-   cd youtube-twitter
+   cd Reelbite
    
 4. Install Dependencies
    ```bash
@@ -72,6 +69,6 @@ This project serves as a comprehensive video-sharing and social engagement platf
 
 5. Start the Development Server
    ```bash
-   npm run dev
+   npm start
 
    
